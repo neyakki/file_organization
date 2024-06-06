@@ -6,4 +6,7 @@ build:
 	cd ./build/x86*/release/install; \
 	export VERSION=`poetry version -s`; \
 	tar -zcf ../../../file_organizer-$$VERSION.tar.gz lib/ file_organizer
-	rm -rf build/x86* dist pyoxidizer.bzl
+
+clear:
+	rm -rf build dist pyoxidizer.bzl
+	rm -rf **/__pycache__
