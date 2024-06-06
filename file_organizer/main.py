@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from file_organizer.organizer import organizer
+from file_organizer.file_organizer import file_organizer
 
 parser = argparse.ArgumentParser(
     prog="FileOrganizer",
@@ -33,7 +33,7 @@ def main() -> None:
     """Точка входа"""
     args = parser.parse_args()
 
-    organizer(
+    file_organizer(
         target_dir=args.target_dir.absolute(),
         recursive=args.recursive,
     )

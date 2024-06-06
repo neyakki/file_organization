@@ -13,17 +13,16 @@ dirty = true
 
 [tool.poetry]
 name = "file-organizer"
-version = "0.0.0+dirty"
+version = "0.0.0"
 description = ""
 authors = ["neyakki <neyakki@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
-pyyaml = "^6.0.1"
+python = "^3.10"
 
 [tool.poetry.scripts]
-organizer = "file_organizer.main:main"
+file_organizer = "file_organizer.main:main"
 
 # https://mypy.readthedocs.io/en/stable/
 [tool.poetry.group.dev.dependencies]
@@ -32,6 +31,7 @@ ruff = "^0.2.1"
 mypy = "^1.8.0"
 bandit = "^1.7.7"
 coverage = "^7.4.1"
+pyoxidizer = "^0.24.0"
 
 [tool.mypy]
 python_version = "3.12"

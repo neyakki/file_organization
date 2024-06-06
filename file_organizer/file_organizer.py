@@ -8,10 +8,10 @@ from pathlib import Path
 
 from .formats import folders, formats
 
-__all__ = ("organizer",)
+__all__ = ("file_organizer",)
 
 
-def organizer(target_dir: Path, recursive: bool = False) -> None:
+def file_organizer(target_dir: Path, recursive: bool = False) -> None:
     """Организация файлов"""
     for name in list_dir(target_dir, recursive=recursive):
         if _dir := formats.get(name.suffix.lower()):
