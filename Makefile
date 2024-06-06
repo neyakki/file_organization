@@ -18,4 +18,5 @@ minor:
 	git tag v$(shell poetry version -s minor)
 
 patch:
-	git tag v$(shell poetry version -s patch)
+	poetry version -s patch
+	git tag v$(shell )
