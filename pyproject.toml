@@ -4,7 +4,7 @@ requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
 build-backend = "poetry_dynamic_versioning.backend"
 
 [tool.poetry]
-name = "file-organizer"
+name = "file_organizer"
 version = "0.0.0"
 description = ""
 authors = ["neyakki <neyakki@gmail.com>"]
@@ -15,8 +15,10 @@ readme = "README.md"
 enable = true
 vcs = "git"
 style = "pep440"
-bump = true
 dirty = true
+
+[tool.poetry-dynamic-versioning.substitution]
+files = ["*/__init__.py"]
 
 [tool.poetry.scripts]
 file_organizer = "file_organizer.main:main"
