@@ -25,6 +25,7 @@ jobs:
           poetry install
       - name: Poetry Build
         run: |
+          git fetch
           . venv/bin/activate
           poetry build
 
