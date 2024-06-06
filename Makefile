@@ -12,10 +12,10 @@ clear:
 	rm -rf build dist pyoxidizer.bzl **/__pycache__
 
 major:
-	git tag $(shell poetry version -s major)
+	git tag v$(shell poetry version -s major)
 
 minor:
-	git tag $(shell poetry version -s minor)
+	git tag v$(shell poetry version -s minor)
 
 patch:
-	git tag $(shell poetry version -s patch)
+	git tag v$(shell poetry version -s patch)
