@@ -1,0 +1,56 @@
+{
+  "python.analysis.typeCheckingMode": "off",
+  "python.analysis.exclude": [
+    "**/__pycache__",
+    "**/.mypy_cache",
+    "**/.ruff_cache",
+    "**/.pytest_cache",
+    "**/.vscode"
+  ],
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.importFormat": "absolute",
+  "python.analysis.autoFormatStrings": true,
+  "python.analysis.enablePytestSupport": false,
+  "python.analysis.indexing": true,
+  "python.analysis.userFileIndexingLimit": -1,
+  "autoDocstring.docstringFormat": "google-notypes",
+  "autoDocstring.startOnNewLine": false,
+  "python.analysis.packageIndexDepths": [
+    {
+      "name": "",
+      "depth": 15,
+      "includeAllSymbols": true
+    }
+  ],
+  "mypy.enabled": true,
+  "mypy.dmypyExecutable": "${workspaceFolder}/.venv/bin/dmypy",
+  "mypy.configFile": "pyproject.toml",
+  "bandit.args": ["--config=${workspaceFolder}/pyproject.toml"],
+  "ruff.lint.args": ["--config=${workspaceFolder}/pyproject.toml"],
+  "ruff.format.args": ["--config=${workspaceFolder}/pyproject.toml"],
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.rulers": [
+      {
+        "column": 120,
+        "color": "#646464"
+      },
+      100,
+      80
+    ],
+  },
+  "[jinja-html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "code-runner.executorMap": {
+    "python": "poetry run python"
+  },
+  "code-runner.clearPreviousOutput": true,
+  "python.testing.pytestArgs": ["tests"],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.pytest_cache": true
+  }
+}
