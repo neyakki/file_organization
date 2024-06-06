@@ -13,10 +13,15 @@ clear:
 
 major:
 	git tag v$(shell poetry version -s major)
+	git add pyproject.toml
+	git commit --amend
 
 minor:
 	git tag v$(shell poetry version -s minor)
+	git add pyproject.toml
+	git commit --amend
 
 patch:
-	poetry version -s patch
-	git tag v$(shell )
+	git tag v$(shell poetry version -s patch)
+	git add pyproject.toml
+	git commit --amend
