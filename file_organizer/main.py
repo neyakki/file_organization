@@ -24,7 +24,7 @@ parser.add_argument(
     "--recursive",
     default=False,
     const=True,
-    nargs='?',
+    nargs="?",
     help="Рекурсивный обход директории",
 )
 

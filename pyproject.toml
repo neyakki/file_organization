@@ -3,6 +3,13 @@
 requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
 build-backend = "poetry_dynamic_versioning.backend"
 
+[tool.poetry]
+name = "file-organizer"
+version = "0.0.0"
+description = ""
+authors = ["neyakki <neyakki@gmail.com>"]
+readme = "README.md"
+
 # https://github.com/mtkennerly/poetry-dynamic-versioning
 [tool.poetry-dynamic-versioning]
 enable = true
@@ -11,18 +18,11 @@ style = "pep440"
 bump = true
 dirty = true
 
-[tool.poetry]
-name = "file-organizer"
-version = "0.0.0"
-description = ""
-authors = ["neyakki <neyakki@gmail.com>"]
-readme = "README.md"
+[tool.poetry.scripts]
+file_organizer = "file_organizer.main:main"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-
-[tool.poetry.scripts]
-file_organizer = "file_organizer.main:main"
 
 # https://mypy.readthedocs.io/en/stable/
 [tool.poetry.group.dev.dependencies]
