@@ -1,0 +1,62 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  release-binary:
+    name: Release Executable Binary.
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+        with:
+          python-version: 3.10
+          architecture: 'x64'
+      - name: Install Dependencies
+        run: |
+          python3 -m venv venv
+          . venv/bin/activate
+          pip install pip
+          pip install poetry
+          poetry install
+      - name: Poetry Build
+        run: |
+          . venv/bin/activate
+          poetry build
+
+      - name: Executable Build
+        run: |
+          # pyoxidizer doesn't know the wheel path, and it doesn't support passing env vars
+          export WHEEL_PATH=`ls ./dist/file*.whl`
+          envsubst '$WHEEL_PATH' < pyoxidizer.template.bzl > pyoxidizer.bzl
+          pip install pyoxidizer
+          pyoxidizer build --release install
+          cd ./build/x86*/release/install
+          tar -zcf ../../../file_organizer.tar.gz lib/ file_organizer
+          cd -
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/iredis.tar.gz
+          asset_name: iredis.tar.gz
+          asset_content_type: application/gzip
