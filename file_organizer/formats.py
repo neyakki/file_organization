@@ -2,82 +2,84 @@
 
 from __future__ import annotations
 
+from json import load
 from pathlib import Path
 
+from .const import DEFAULT_FORMATS
+
 __all__ = (
-    "folders",
-    "formats",
+    "FormatsFile",
+    "read_config",
 )
 
-tables = Path("tables")
-texts = Path("texts")
-presentations = Path("presentations")
-pdf = Path("pdf")
-e_books = Path("e_books")
-images = Path("images")
-archives = Path("archives")
-media = Path("media")
-configs = Path("configs")
-markup = Path("markup")
 
-folders = (
-    tables,
-    texts,
-    presentations,
-    pdf,
-    e_books,
-    images,
-    archives,
-    media,
-    configs,
-    markup,
-)
+def read_config(config_path: Path | None = None) -> FormatsFile:
+    """
+    Чтение файла конфигурации
 
-formats = {
-    # tables
-    ".xlsx": tables,
-    ".xls": tables,
-    ".csv": tables,
-    ".ods": tables,
-    # txt
-    ".doc": texts,
-    ".docx": texts,
-    ".odt": texts,
-    ".rtf": texts,
-    ".txt": texts,
-    # presentations
-    ".ppt": presentations,
-    ".pptx": presentations,
-    ".odp": presentations,
-    # pdf
-    ".pdf": pdf,
-    # e-books
-    ".epub": e_books,
-    ".mobi": e_books,
-    ".azw": e_books,
-    # image
-    ".jpeg": images,
-    ".jpg": images,
-    ".png": images,
-    ".gif": images,
-    ".svg": images,
-    # archive
-    ".tar.gz": archives,
-    ".zip": archives,
-    ".rar": archives,
-    ".7z": archives,
-    # media
-    ".mp3": media,
-    ".mp4": media,
-    ".avi": media,
-    ".mov": media,
-    # config
-    ".json": configs,
-    ".yaml": configs,
-    ".yml": configs,
-    ".ini": configs,
-    # markup
-    ".xml": markup,
-    ".html": markup,
-    ".md": markup,
-}
+    Args:
+        config_path: Путь к файлу настроек
+
+    Returns:
+        Экземпляр :class: `FormatsFile`
+    """
+    if not config_path:
+        return FormatsFile()
+
+    config = load(config_path.open("rb"))
+    formats = DEFAULT_FORMATS.copy()
+
+    if formats_config := config.get("formats"):
+        for folder in formats_config.keys():
+            folder_path = Path(folder)
+
+            for ext in formats_config[folder]:
+                formats[ext] = folder_path
+
+    return FormatsFile(formats=formats)
+
+
+class FormatsFile:
+    """Класс для работы с директориями форматов файлов"""
+
+    def __init__(
+        self,
+        formats: dict[str, Path] = DEFAULT_FORMATS,
+    ) -> None:
+        """
+        Конструктор
+
+        Args:
+            formats: Доступные форматы. Defaults to DEFAULT_FORMATS.
+            folders: Директории форматов. Defaults to DEFAULT_FOLDERS.
+        """
+        self._formats = formats
+        self._folders = set(formats.values())
+        self._other = Path("unknown")
+
+    def get_formats(self, name: Path) -> Path | None:
+        """
+        Получение директории
+
+        Args:
+            name: Название файла
+
+        Returns:
+            Директория для перемещения
+        """
+        if name.is_dir():
+            return None
+
+        return self._formats.get(name.suffix.lower(), self._other)
+
+    def check_folders_format(self, name: Path) -> bool:
+        """
+        Проверка директории
+
+        Args:
+            name: Название директории
+
+        Returns:
+            Существует ли директория
+        """
+        return Path(name.stem) not in self._folders

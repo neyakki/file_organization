@@ -1,11 +1,19 @@
 # https://python-poetry.org/docs/
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
+build-backend = "poetry_dynamic_versioning.backend"
+
+# https://github.com/mtkennerly/poetry-dynamic-versioning
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+style = "pep440"
+bump = true
+dirty = true
 
 [tool.poetry]
 name = "file_organizer"
-version = "0.1.0"
+version = "0.0.0"
 description = ""
 authors = ["neyakki <neyakki@gmail.com>"]
 readme = "README.md"
@@ -14,7 +22,7 @@ readme = "README.md"
 files = ["*/__init__.py"]
 
 [tool.poetry.scripts]
-file_organizer = "file_organizer.main:main"
+file_organizer = "file_organizer.__main__:main"
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -108,6 +116,7 @@ ignore = [
     "D203",   # Перед строкой документации класса требуется 1 пустая строка.
     "D212",   # Многострочное резюме документации должно начинаться с первой строки.
     "D206",   # Строка документации должна иметь отступы с пробелами, а не с табуляцией.
+    "D205",   # Между строкой сводки и описанием требуется 1 пустая строка..
     "D300",   # Использование """
     "D415",   # Точка в конце
     "Q",      # Кавычки
