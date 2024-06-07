@@ -13,21 +13,27 @@ __all__ = (
 )
 
 
-def read_config(config_path: Path | None = None) -> FormatsFile:
+def read_config(
+    config_path: Path | None = None,
+    *,
+    add_default: bool = False,
+) -> FormatsFile:
     """
     Чтение файла конфигурации
 
     Args:
         config_path: Путь к файлу настроек
+        add_default: Добавить дефолтные настройки
 
     Returns:
         Экземпляр :class: `FormatsFile`
     """
-    if not config_path:
+    if not config_path or not config_path.exists():
         return FormatsFile()
 
     config = load(config_path.open("rb"))
-    formats = DEFAULT_FORMATS.copy()
+
+    formats = DEFAULT_FORMATS.copy() if add_default else {}
 
     if formats_config := config.get("formats"):
         for folder in formats_config.keys():
@@ -72,7 +78,7 @@ class FormatsFile:
 
         return self._formats.get(name.suffix.lower(), self._other)
 
-    def check_folders_format(self, name: Path) -> bool:
+    def check_folder_format(self, name: Path) -> bool:
         """
         Проверка директории
 
@@ -82,4 +88,4 @@ class FormatsFile:
         Returns:
             Существует ли директория
         """
-        return Path(name.stem) not in self._folders
+        return Path(name.stem) in self._folders
