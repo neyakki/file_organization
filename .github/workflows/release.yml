@@ -22,6 +22,7 @@ jobs:
           . venv/bin/activate
           pip install pip
           pip install poetry
+          poetry self add "poetry-dynamic-versioning[plugin]"
           poetry install
       - name: Poetry Build
         run: |
