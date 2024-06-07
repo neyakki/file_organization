@@ -1,5 +1,4 @@
 build:
-	poetry version prerelease
 	poetry build
 	export WHEEL_PATH=`ls dist/file*.whl`; \
 	envsubst '$$WHEEL_PATH' < pyoxidizer.template.bzl > pyoxidizer.bzl
@@ -10,18 +9,3 @@ build:
 
 clear:
 	rm -rf build dist pyoxidizer.bzl **/__pycache__
-
-major:
-	git tag v$(shell poetry version -s major)
-	git add pyproject.toml
-	git commit --amend
-
-minor:
-	git tag v$(shell poetry version -s minor)
-	git add pyproject.toml
-	git commit --amend
-
-patch:
-	git tag v$(shell poetry version -s patch)
-	git add pyproject.toml
-	git commit --amend
