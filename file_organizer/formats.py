@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from json import load
+from logging import Logger, getLogger
 from pathlib import Path
 
 from .const import DEFAULT_FORMATS
@@ -15,6 +16,7 @@ __all__ = (
 
 def read_config(
     config_path: Path | None = None,
+    logger: Logger | None = None,
     *,
     add_default: bool = False,
 ) -> FormatsFile:
@@ -28,6 +30,7 @@ def read_config(
     Returns:
         Экземпляр :class: `FormatsFile`
     """
+    logger = logger or getLogger(__name__)
     if not config_path or not config_path.exists():
         return FormatsFile()
 
@@ -41,6 +44,10 @@ def read_config(
 
             for ext in formats_config[folder]:
                 formats[ext] = folder_path
+    else:
+        logger.warning(
+            "Не найден раздел `formats`. Используется конфигурация по умолчанию",
+        )
 
     return FormatsFile(formats=formats)
 
