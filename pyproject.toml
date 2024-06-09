@@ -26,6 +26,7 @@ file_organizer = "file_organizer.__main__:main"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+pytest-cov = "^5.0.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.1"
@@ -196,23 +197,24 @@ console_output_style = "count"
 python_files = "test_*.py"
 python_classes = "Test*"
 python_functions = "test_"
+addopts = "--cov=file_organizer --cov-branch"
 
-# https://coverage.readthedocs.io/en/7.4.1
-[tool.coverage.run]
-branch = true
-source = ["file_organizer"]
-omit = ["docs", "tests"]
+# # https://coverage.readthedocs.io/en/7.4.1
+# [tool.coverage.run]
+# branch = true
+# source = ["file_organizer"]
+# omit = ["docs", "tests"]
 
-[tool.coverage.report]
-sort = "cover"
-# Regexes for lines to exclude from consideration
-exclude_also = [
-    "@(abc\\.)?abstractmethod",
-    "raise NotImplementedError",
-    "if __name__ == .__main__.:",
-]
-ignore_errors = true
-include_namespace_packages = true
+# [tool.coverage.report]
+# sort = "cover"
+# # Regexes for lines to exclude from consideration
+# exclude_also = [
+#     "@(abc\\.)?abstractmethod",
+#     "raise NotImplementedError",
+#     "if __name__ == .__main__.:",
+# ]
+# ignore_errors = true
+# include_namespace_packages = true
 
-[tool.coverage.html]
-directory = ".coverage_html"
+# [tool.coverage.html]
+# directory = ".coverage_html"

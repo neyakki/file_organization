@@ -11,11 +11,10 @@ clear:
 	rm -rf build dist pyoxidizer.bzl **/__pycache__
 
 test:
-	poetry run coverage run -m pytest -vv -s .
-	poetry run coverage report
+	poetry run pytest -vv -s .
 
 html:
-	poetry run coverage html
+	poetry run pytest --cov-report html
 
 check:
 	poetry run ruff --config pyproject.toml .
