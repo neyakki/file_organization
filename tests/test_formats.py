@@ -46,7 +46,7 @@ class TestFormats:
     @pytest.mark.parametrize(
         "path,expected",
         [
-            (Path("tests"), None),
+            (Path("tests"), ""),
             (Path("tests.py"), Path("unknown")),
             (Path("tests.txt"), Path("texts")),
         ],
@@ -54,12 +54,8 @@ class TestFormats:
     def test_get_formats_dir(
         self,
         path: Path,
-        expected: Path | None,
+        expected: Path | str,
     ) -> None:
-        if expected is None:
-            assert self.formats.get_formats(path) is expected
-            return
-
         assert self.formats.get_formats(path) == expected
 
     @pytest.mark.parametrize(

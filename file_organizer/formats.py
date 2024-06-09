@@ -25,6 +25,7 @@ def read_config(
 
     Args:
         config_path: Путь к файлу настроек
+        logger: Экземпляр :class: `Logger`
         add_default: Добавить дефолтные настройки
 
     Returns:
@@ -70,7 +71,7 @@ class FormatsFile:
         self._folders = set(formats.values())
         self._other = Path("unknown")
 
-    def get_formats(self, name: Path) -> Path | None:
+    def get_formats(self, name: Path) -> Path | str:
         """
         Получение директории
 
@@ -81,7 +82,7 @@ class FormatsFile:
             Директория для перемещения
         """
         if name.is_dir():
-            return None
+            return ""
 
         return self._formats.get(name.suffix.lower(), self._other)
 
