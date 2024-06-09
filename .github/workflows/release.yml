@@ -44,10 +44,11 @@ jobs:
 
       - name: Executable Build
         run: |
+          poetry build
           # pyoxidizer doesn't know the wheel path, and it doesn't support passing env vars
           export WHEEL_PATH=`ls ./dist/file*.whl`
           envsubst '$WHEEL_PATH' < pyoxidizer.template.bzl > pyoxidizer.bzl
-          pyoxidizer build --release install
+          poetry run pyoxidizer build --release install
           cd ./build/x86*/release/install
           tar -zcf ../../../file_organizer.tar.gz lib/ file_organizer
           cd -
