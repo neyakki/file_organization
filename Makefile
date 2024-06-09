@@ -9,3 +9,14 @@ build:
 
 clear:
 	rm -rf build dist pyoxidizer.bzl **/__pycache__
+
+test:
+	poetry run pytest -vv -s .
+
+html:
+	poetry run pytest --cov-report html
+
+check:
+	poetry run ruff --config pyproject.toml .
+	poetry run bandit -c pyproject.toml -r .
+	poetry run mypy --config-file pyproject.toml .

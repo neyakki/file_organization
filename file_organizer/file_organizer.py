@@ -66,7 +66,7 @@ class FileOrganizer:
             recursive: Рекурсивное получение файлов
         """
         for path in name.iterdir():
-            if path.is_dir() and self._format_file.check_folders_format(path):
+            if path.is_dir() and self._format_file.check_folder_format(path):
                 if recursive:
                     yield from self._list_dir(
                         name=path,
