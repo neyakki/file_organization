@@ -25,7 +25,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Cache Poetry
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             ~/.cache/pypoetry
@@ -37,7 +37,7 @@ jobs:
       - name: Install Poetry
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
-          echo "::add-path::${HOME}/.local/bin"
+          echo "${HOME}/.local/bin" >> $GITHUB_PATH
           poetry --version
 
       - name: Install Dependencies
