@@ -5,10 +5,19 @@ on:
     branches:
       - main
       - feature/*
+    paths:
+      - 'file_organizer/**'
+      - 'tests/**'
+      - 'pyproject.toml'
+      - 'poetry.lock'
   pull_request:
     branches:
       - main
-
+    paths:
+      - 'file_organizer/**'
+      - 'tests/**'
+      - 'pyproject.toml'
+      - 'poetry.lock'
 jobs:
   linter:
     name: Linter
