@@ -10,31 +10,43 @@ jobs:
     name: Release Executable Binary.
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
-          architecture: 'x64'
+          python-version: ${{ matrix.python-version }}
+
+      - name: Cache Poetry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pypoetry
+            ~/.cache/pip
+          key: |
+            ${{ runner.os }}-poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-${{ matrix.python-version }}-
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo "${HOME}/.local/bin" >> $GITHUB_PATH
+          poetry --version
+
       - name: Install Dependencies
         run: |
-          python3 -m venv venv
-          . venv/bin/activate
-          pip install pip
-          pip install poetry
           poetry self add "poetry-dynamic-versioning[plugin]"
           poetry install
-      - name: Poetry Build
-        run: |
-          . venv/bin/activate
-          poetry build
 
       - name: Executable Build
         run: |
           # pyoxidizer doesn't know the wheel path, and it doesn't support passing env vars
           export WHEEL_PATH=`ls ./dist/file*.whl`
           envsubst '$WHEEL_PATH' < pyoxidizer.template.bzl > pyoxidizer.bzl
-          pip install pyoxidizer
           pyoxidizer build --release install
           cd ./build/x86*/release/install
           tar -zcf ../../../file_organizer.tar.gz lib/ file_organizer
