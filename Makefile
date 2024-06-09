@@ -11,8 +11,13 @@ clear:
 	rm -rf build dist pyoxidizer.bzl **/__pycache__
 
 test:
-	poetry run coverage run -m pytest .
+	poetry run coverage run -m pytest -vv -s .
 	poetry run coverage report
 
 html:
 	poetry run coverage html
+
+check:
+	poetry run ruff --config pyproject.toml .
+	poetry run bandit -c pyproject.toml -r .
+	poetry run mypy --config-file pyproject.toml .

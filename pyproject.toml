@@ -27,15 +27,16 @@ file_organizer = "file_organizer.__main__:main"
 [tool.poetry.dependencies]
 python = "^3.10"
 
-# https://mypy.readthedocs.io/en/stable/
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.1"
 ruff = "^0.2.1"
 mypy = "^1.8.0"
-bandit = "^1.7.7"
+bandit = {extras = ["toml"], version = "^1.7.8"}
 coverage = "^7.4.1"
 pyoxidizer = "^0.24.0"
+pytest-mock = "^3.14.0"
 
+# https://mypy.readthedocs.io/en/stable/
 [tool.mypy]
 python_version = "3.12"
 exclude = [
@@ -57,7 +58,6 @@ exclude = [
 strict = true
 explicit_package_bases = true
 
-# https://mypy.readthedocs.io/en/stable/
 [tool.ruff]
 exclude = [
     ".coverage_html",
@@ -157,7 +157,8 @@ max-doc-length = 72
 convention = "google"
 
 [tool.ruff.lint.per-file-ignores]
-"**/{tests,docs,tools}/*" = ["PLR6301", "PLR2004"]
+"**/{tests,docs,tools}/*" = ["PLR6301", "PLR2004", "D"]
+"**/__init__.py" = ["D"]
 
 [tool.ruff.format]
 quote-style = "double"
