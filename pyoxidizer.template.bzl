@@ -190,7 +190,7 @@ def make_exe():
     # python_config.write_modules_directory_env = "/tmp/oxidized/loaded_modules"
 
     # Evaluate a string as Python code when the interpreter starts.
-    python_config.run_command = "from file_organizer.main import main; main()"
+    python_config.run_command = "from file_organizer.__main__ import main; main()"
 
     # Run a Python module as __main__ when the interpreter starts.
     # python_config.run_module = "<module>"
